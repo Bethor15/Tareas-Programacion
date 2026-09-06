@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrocerQuick POS — Gestión Eficiente para tu Supermercado</title>
+
+  <!-- Fuentes (Work Sans + JetBrains Mono, como en el design system) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="inicio">
+    <div class="container header__inner">
+      <a href="#inicio" class="brand">GrocerQuick&nbsp;POS</a>
+
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav">
+        <a href="#conocenos">Conócenos</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#login" class="btn btn--primary btn--sm">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <h1>Gestión Eficiente para tu Supermercado</h1>
+          <p>
+            Simplifica tus operaciones diarias con GrocerQuick POS. Un sistema
+            diseñado para la velocidad, claridad y eficiencia ergonómica en el
+            punto de venta.
+          </p>
+          <a href="#servicios" class="btn btn--primary btn--lg" id="hero-cta">
+            Comenzar Ahora <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="hero__media">
+          <!-- Sustituye el src por tu imagen real cuando la tengas -->
+          <div class="media-placeholder media-placeholder--hero">
+            <span>Imagen del punto de venta</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICIOS ===================== -->
+    <section class="services" id="servicios">
+      <div class="container">
+        <h2 class="section-title">Nuestros Servicios</h2>
+
+        <div class="services__grid">
+          <article class="card">
+            <div class="card__media"><span class="card__icon">📦</span></div>
+            <h3>Gestión de Inventario</h3>
+            <p>Control de stock en tiempo real, alertas de reposición y trazabilidad por producto.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__media"><span class="card__icon">🧑‍🤝‍🧑</span></div>
+            <h3>Gestión de Clientes</h3>
+            <p>Historial de compras, programas de fidelidad y segmentación para campañas.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__media"><span class="card__icon">🗂️</span></div>
+            <h3>Gestión de Empleados</h3>
+            <p>Turnos, permisos por rol y reportes de desempeño por cajero.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__media"><span class="card__icon">📈</span></div>
+            <h3>Gestión de Ventas</h3>
+            <p>Cierres de caja, reportes diarios y análisis de tendencias de venta.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TESTIMONIOS ===================== -->
+    <section class="testimonials" id="conocenos">
+      <div class="container">
+        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+
+        <div class="testimonials__grid">
+          <blockquote class="quote">
+            <p>“Reducimos el tiempo de cobro a la mitad. El personal aprendió a usarlo en un día.”</p>
+            <footer><strong>María Fernández</strong><span>Supermercado La Esquina</span></footer>
+          </blockquote>
+
+          <blockquote class="quote">
+            <p>“El control de inventario nos ahorró pérdidas por caducidad todos los meses.”</p>
+            <footer><strong>Carlos Ruiz</strong><span>Autoservicio El Trébol</span></footer>
+          </blockquote>
+
+          <blockquote class="quote">
+            <p>“Los reportes de ventas son claros y me llegan al cierre, sin tener que pedirlos.”</p>
+            <footer><strong>Lucía Gómez</strong><span>Mercadito Central</span></footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA / CONTACTO ===================== -->
+    <section class="cta" id="contacto">
+      <div class="container cta__inner">
+        <div>
+          <h2>¿Listo para modernizar tu punto de venta?</h2>
+          <p>Escríbenos y te mostramos una demo con datos de tu tienda.</p>
+        </div>
+        <form class="cta__form" id="contact-form" novalidate>
+          <label class="sr-only" for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+          <button type="submit" class="btn btn--primary">Solicitar demo</button>
+          <p class="form-msg" id="form-msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" id="login">
+    <div class="container site-footer__inner">
+      <span class="brand brand--sm">GrocerQuick POS</span>
+      <p>&copy; <span id="year"></span> GrocerQuick. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
