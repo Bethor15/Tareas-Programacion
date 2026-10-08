@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+
+# Build de TypeScript
+dist/
+*.tsbuildinfo
+
+# Variables de entorno (aquí van las contraseñas, NO se suben)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Archivos del sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

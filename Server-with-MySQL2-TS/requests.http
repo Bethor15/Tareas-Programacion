@@ -1,0 +1,81 @@
+# Colección HTTP - API de productos (Server with MySQL2 TS)
+# Se usa con la extensión "REST Client" de VS Code.
+# Da clic en "Send Request" arriba de cada petición, en orden (01 a 12).
+
+@baseUrl = http://localhost:4001/api/v1/products
+
+### 01 - Consulta general (solo productos activos) -> 200
+GET {{baseUrl}}/getAll
+
+### 02 - Consulta por ID de un producto activo -> 200
+GET {{baseUrl}}/getById/1
+
+### 03 - Crear producto -> 201
+# Cuerpo: name, price, stock, description, brand (opcional), img (opcional)
+# @name crear
+POST {{baseUrl}}/create
+Content-Type: application/json
+
+{
+  "name": "Mouse Gamer",
+  "price": 499.99,
+  "stock": 15,
+  "description": "Mouse con luces RGB",
+  "brand": "Logitech",
+  "img": "https://ejemplo.com/mouse.jpg"
+}
+
+### 04 - Actualización completa del producto creado -> 200
+PUT {{baseUrl}}/update/{{crear.response.body.$.id}}
+Content-Type: application/json
+
+{
+  "name": "Mouse Gamer Pro",
+  "price": 650,
+  "stock": 10,
+  "description": "Mouse inalámbrico RGB",
+  "brand": "Logitech",
+  "img": "https://ejemplo.com/mouse-pro.jpg"
+}
+
+### 05 - Cambio de precio del producto creado (solo price) -> 200
+PATCH {{baseUrl}}/change-price/{{crear.response.body.$.id}}
+Content-Type: application/json
+
+{
+  "price": 599
+}
+
+### 06 - Baja lógica del producto creado (active = FALSE) -> 200
+DELETE {{baseUrl}}/delete/{{crear.response.body.$.id}}
+
+### 07 - Comprobar que ya no aparece en getAll -> 200 (sin el producto)
+GET {{baseUrl}}/getAll
+
+### 08 - Comprobar que ya no aparece en getById -> 404
+GET {{baseUrl}}/getById/{{crear.response.body.$.id}}
+
+### 09 - ID inexistente -> 404
+GET {{baseUrl}}/getById/9999
+
+### 10 - Datos inválidos: precio negativo -> 400
+POST {{baseUrl}}/create
+Content-Type: application/json
+
+{
+  "name": "Producto malo",
+  "price": -50,
+  "stock": 3,
+  "description": "Precio inválido"
+}
+
+### 11 - Datos inválidos: ID no numérico -> 400
+GET {{baseUrl}}/getById/abc
+
+### 12 - Datos inválidos: cambio de precio con texto -> 400
+PATCH {{baseUrl}}/change-price/1
+Content-Type: application/json
+
+{
+  "price": "cien"
+}

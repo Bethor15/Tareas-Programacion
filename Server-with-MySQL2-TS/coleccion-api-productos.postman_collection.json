@@ -1,0 +1,313 @@
+{
+  "info": {
+    "name": "API Productos - Server with MySQL2 TS",
+    "description": "Evidencia de las 6 rutas de /api/v1/products. Ejecutar en orden (01 a 12).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Consulta general (getAll)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getAll",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getAll"
+          ]
+        },
+        "description": "Solo devuelve productos con active = TRUE. Esperado: 200."
+      }
+    },
+    {
+      "name": "02 - Consulta por ID de producto activo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getById/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getById",
+            "1"
+          ]
+        },
+        "description": "Esperado: 200 con el producto 1."
+      }
+    },
+    {
+      "name": "03 - Crear producto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/create",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "create"
+          ]
+        },
+        "description": "Cuerpo: name, price, stock, description, brand (opcional), img (opcional). Esperado: 201. Guarda el id creado en la variable productId.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Mouse Gamer\",\n  \"price\": 499.99,\n  \"stock\": 15,\n  \"description\": \"Mouse con luces RGB\",\n  \"brand\": \"Logitech\",\n  \"img\": \"https://ejemplo.com/mouse.jpg\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.id) pm.collectionVariables.set('productId', json.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Actualización completa del producto creado",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/update/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "update",
+            "{{productId}}"
+          ]
+        },
+        "description": "Cuerpo completo: name, price, stock, description, brand, img. Esperado: 200.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Mouse Gamer Pro\",\n  \"price\": 650,\n  \"stock\": 10,\n  \"description\": \"Mouse inalámbrico RGB\",\n  \"brand\": \"Logitech\",\n  \"img\": \"https://ejemplo.com/mouse-pro.jpg\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "05 - Cambio de precio del producto creado",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/change-price/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "change-price",
+            "{{productId}}"
+          ]
+        },
+        "description": "Cuerpo: solamente price. Esperado: 200.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"price\": 599\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "06 - Baja lógica del producto creado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/delete/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "delete",
+            "{{productId}}"
+          ]
+        },
+        "description": "Cambia active a FALSE (no usa DELETE físico). Esperado: 200."
+      }
+    },
+    {
+      "name": "07 - Comprobar que ya no aparece en getAll",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getAll",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getAll"
+          ]
+        },
+        "description": "El producto dado de baja ya no debe aparecer en la lista."
+      }
+    },
+    {
+      "name": "08 - Comprobar que ya no aparece en getById",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getById/{{productId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getById",
+            "{{productId}}"
+          ]
+        },
+        "description": "Esperado: 404 porque el producto está inactivo."
+      }
+    },
+    {
+      "name": "09 - ID inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getById/9999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getById",
+            "9999"
+          ]
+        },
+        "description": "Esperado: 404."
+      }
+    },
+    {
+      "name": "10 - Datos inválidos: precio negativo",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/create",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "create"
+          ]
+        },
+        "description": "Esperado: 400.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Producto malo\",\n  \"price\": -50,\n  \"stock\": 3,\n  \"description\": \"Precio inválido\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "11 - Datos inválidos: ID no numérico",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getById/abc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getById",
+            "abc"
+          ]
+        },
+        "description": "Esperado: 400."
+      }
+    },
+    {
+      "name": "12 - Datos inválidos: cambio de precio con texto",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/change-price/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "change-price",
+            "1"
+          ]
+        },
+        "description": "Esperado: 400.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"price\": \"cien\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4001/api/v1/products"
+    },
+    {
+      "key": "productId",
+      "value": "5"
+    }
+  ]
+}
